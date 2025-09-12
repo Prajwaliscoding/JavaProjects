@@ -21,5 +21,6 @@ public class BoxMaker {
 			}
 			System.out.println();
 		}
+		keyboard.close();
 	}
 }

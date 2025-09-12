@@ -1,0 +1,97 @@
+package javaprojects;
+
+import java.util.Scanner;
+
+public class MeasureConverter {
+	public static final String IN = "INCHES";
+	public static final String FT = "FEET";
+	public static final String CM = "CENTIMETERS";
+
+	public static void main(String[] args) {
+		MeasureConverter m = new MeasureConverter();
+		m.start(); 
+	}
+	public void start() {
+		Scanner keyboard = new Scanner(System.in);
+		printGreetings(); 
+		boolean quit = false; 
+		while (!quit) { 
+			printOptions(); 
+			String unit1 = keyboard.nextLine(); 
+			String unit2 = keyboard.nextLine(); 
+			if (!isValidUnit(unit1) || !isValidUnit(unit2)) {
+				System.out.println("One of the units was invalid. Try again.");
+				continue; 
+			}
+			printInput(unit1, unit2); 
+			double value = keyboard.nextDouble(); 
+			keyboard.nextLine(); 
+			double result = 0.0; 
+			if (unit1.equalsIgnoreCase(IN) && unit2.equalsIgnoreCase(FT)) {
+				result = inToFt(value);
+			} else if (unit1.equalsIgnoreCase(IN) && unit2.equalsIgnoreCase(CM)) {
+				result = inToCm(value);
+			} else if (unit1.equalsIgnoreCase(CM) && unit2.equalsIgnoreCase(IN)) {
+				result = cmToIn(value);
+			} else if (unit1.equalsIgnoreCase(CM) && unit2.equalsIgnoreCase(FT)) {
+				result = cmToFt(value);
+			} else if (unit1.equalsIgnoreCase(FT) && unit2.equalsIgnoreCase(IN)) {
+				result = ftToIn(value);
+			} else if (unit1.equalsIgnoreCase(FT) && unit2.equalsIgnoreCase(CM)) {
+				result = ftToCm(value);
+			} else {
+				result = value; 
+			}
+			printResults(unit1, unit2, result); 
+			System.out.println("Press Enter to keep converting units or enter \"quit\" to quit");
+			quit = keyboard.nextLine().equalsIgnoreCase("quit"); 
+		}
+		keyboard.close();
+		System.out.println("Goodbye!"); 
+	}
+
+	public void printGreetings() {
+		System.out.println("Welcome to the units converter!");
+	}
+
+	public void printOptions() {
+		System.out.println("Enter the type of units followed by the second type.");
+		System.out.println("Units can be either \"" + IN + "\", \"" + FT + "\", or \"" + CM + "\".");
+	}
+
+	public void printResults(String u1, String u2, double result) {
+		System.out.println("There are " + result + " " + u2 + " in " + u1);
+	}
+
+	public boolean isValidUnit(String input) {
+		return input.equalsIgnoreCase(IN) || input.equalsIgnoreCase(CM) || input.equalsIgnoreCase(FT);
+	}
+
+	public void printInput(String u1, String u2) {
+		System.out.println("Enter " + u1 + " and I'll determine the number of " + u2);
+	}
+
+	public double inToFt(double in) {
+		return in / 12.0; 
+	}
+
+	public double inToCm(double in) {
+		return in * 2.54; 
+	}
+
+	public double cmToIn(double cm) {
+		return cm * 0.393701; 
+	}
+
+	public double cmToFt(double cm) {
+		return cm * 0.0328084; 
+	}
+
+	public double ftToIn(double ft) {
+		return ft * 12.0; 
+	}
+
+	public double ftToCm(double ft) {
+		return ft * 30.48; 
+	}
+}
